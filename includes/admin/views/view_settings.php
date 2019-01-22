@@ -48,7 +48,7 @@
 	<input type="hidden" name="action" value="votacion_settings_action">
 	<tr>
 		<td colspan="2">
-			<h3>Confuracion de los Botones</h3>
+			<h3>Configuraci&oacute;n de los Botones</h3>
 		</td>
 	</tr>
 	<tr>
