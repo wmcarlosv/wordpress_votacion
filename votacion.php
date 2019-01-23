@@ -37,7 +37,6 @@ define('EST_DIR_URL', plugin_dir_url(__FILE__));
 		public function includes()
 		{
 		
-
 			//ARCHIVO PARA MANIPULACION DE TABLAS EN LA BASE DE DATOS
 			require_once EST_DIR_PATH.'includes/functions.php';
 			//postypes
