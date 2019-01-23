@@ -49,9 +49,9 @@
 		}
 	</style>
 	<div class="contenedor-botones">
-		<a href="#" data-type="positiva" class="btn-base votacion_positiva"><i class="fa <?php echo $vsettings['votacion_icono_voto_positivo'] ?>"></i> <?php echo $positivas; ?></a>
+		<a href="#" data-type="positiva" class="btn-base votacion_positiva"><i class="fa <?php echo $vsettings['votacion_icono_voto_positivo'] ?>"></i> <b id="v_positivas"><?php echo $positivas; ?></b></a>
 
-		<a href="#" data-type="negativa" class="btn-base votacion_negativa"><i class="fa <?php echo $vsettings['votacion_icono_voto_negativo'] ?>"></i> <?php echo $negativas; ?></a>
+		<a href="#" data-type="negativa" class="btn-base votacion_negativa"><i class="fa <?php echo $vsettings['votacion_icono_voto_negativo'] ?>"></i> <b id="v_negativas"><?php echo $negativas; ?></b></a>
 	</div>
 	<script type="text/javascript">
 		jQuery(document).ready(function(){
@@ -62,7 +62,9 @@
 				var votacion_url_post = "<?php echo esc_url(get_permalink()); ?>";
 
 				jQuery.post("<?php echo admin_url('admin-ajax.php'); ?>",{ action : 'add_votacion','votacion_ip' : votacion_ip, 'votacion_fecha' : votacion_fecha, 'votacion_tipo_votacion' : votacion_tipo_votacion, 'votacion_url_post' : votacion_url_post  }, function( response ){
-					console.log( response );
+					var data = JSON.parse(response);
+					jQuery("#v_positivas").html(data.positivos);
+					jQuery("#v_negativas").html(data.negativos);
 				});
 
 			});

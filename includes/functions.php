@@ -28,6 +28,30 @@
 
 		//con la id obtenida registras los meta
 		update_post_meta($idpost,'pm_votacion_estadistic',$_POST);
+
+		//Votaciones Realizadas
+		$positivas = 0;
+		$negativas = 0;
+		$args = array(
+			'post_type'=>'votaciones',
+			'post_status'=>'publish',
+			'posts_per_page'=>-1
+		);
+
+		$votaciones = get_posts($args);
+
+		foreach($votaciones as $key => $value)
+		{
+			$data = get_post_meta($votaciones[$key]->ID,'pm_votacion_estadistic', true);
+			if($data['votacion_tipo_votacion'] == "positiva"){
+				$positivas+=1;
+			}else{
+				$negativas+=1;
+			}
+		}
+
+		print json_encode(['positivos' => $positivas, 'negativos' => $negativas]);
+
 		wp_die();
 	}
 
