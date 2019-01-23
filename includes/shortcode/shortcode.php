@@ -86,35 +86,58 @@
 	</div>
 	<script type="text/javascript">
 		jQuery(document).ready(function(){
-			<?php if($tipo_ultimo_voto == "positiva"){ ?>
+			<?php if(!$puede_votar){ ?>
 
-				jQuery("a.votacion_positiva").css("background","<?php echo $vsettings['votacion_color_despues_votar']; ?>");
+					<?php if($tipo_ultimo_voto == "positiva"){ ?>
 
-			<?php } else if($tipo_ultimo_voto == "negativa") { ?>
-				jQuery("a.votacion_negativa").css("background","<?php echo $vsettings['votacion_color_despues_votar']; ?>");
+						jQuery("a.votacion_positiva").css("background","<?php echo $vsettings['votacion_color_despues_votar']; ?>");
 
-			<?php }else{ ?>
+					<?php } else if($tipo_ultimo_voto == "negativa") { ?>
+						jQuery("a.votacion_negativa").css("background","<?php echo $vsettings['votacion_color_despues_votar']; ?>");
 
-				jQuery("a.btn-base").click(function(){
-					var voto = jQuery(this).attr("data-voto");
-					var votacion_tipo_votacion = jQuery(this).attr("data-type");
-					var votacion_ip = "<?php echo getRealIpAddr(); ?>";
-					var votacion_fecha = "<?php echo date('Y-m-d H:m:s'); ?>";
-					var votacion_url_post = "<?php echo esc_url(get_permalink()); ?>";
-					
-					if(voto == "no"){
-						jQuery.post("<?php echo admin_url('admin-ajax.php'); ?>",{ action : 'add_votacion','votacion_ip' : votacion_ip, 'votacion_fecha' : votacion_fecha, 'votacion_tipo_votacion' : votacion_tipo_votacion, 'votacion_url_post' : votacion_url_post  }, function( response ){
-							var data = JSON.parse(response);
-							jQuery("#v_positivas").html(data.positivos);
-							jQuery("#v_negativas").html(data.negativos);
+					<?php }else{ ?>
+
+						jQuery("a.btn-base").click(function(){
+							var voto = jQuery(this).attr("data-voto");
+							var votacion_tipo_votacion = jQuery(this).attr("data-type");
+							var votacion_ip = "<?php echo getRealIpAddr(); ?>";
+							var votacion_fecha = "<?php echo date('Y-m-d H:m:s'); ?>";
+							var votacion_url_post = "<?php echo esc_url(get_permalink()); ?>";
+
+							if(voto == "no"){
+								jQuery.post("<?php echo admin_url('admin-ajax.php'); ?>",{ action : 'add_votacion','votacion_ip' : votacion_ip, 'votacion_fecha' : votacion_fecha, 'votacion_tipo_votacion' : votacion_tipo_votacion, 'votacion_url_post' : votacion_url_post  }, function( response ){
+									var data = JSON.parse(response);
+									jQuery("#v_positivas").html(data.positivos);
+									jQuery("#v_negativas").html(data.negativos);
+								});
+
+								jQuery(this).css("background","<?php echo $vsettings['votacion_color_despues_votar']; ?>");
+								jQuery("a.votacion_positiva, a.votacion_negativa").attr("data-voto","yes");
+							}
+							
 						});
 
-						jQuery(this).css("background","<?php echo $vsettings['votacion_color_despues_votar']; ?>");
-						jQuery("a.votacion_positiva, a.votacion_negativa").attr("data-voto","yes");
-					}
-					
-				});
+					<?php } ?>
+			<?php }else{ ?>
+						jQuery("a.btn-base").click(function(){
+							var voto = jQuery(this).attr("data-voto");
+							var votacion_tipo_votacion = jQuery(this).attr("data-type");
+							var votacion_ip = "<?php echo getRealIpAddr(); ?>";
+							var votacion_fecha = "<?php echo date('Y-m-d H:m:s'); ?>";
+							var votacion_url_post = "<?php echo esc_url(get_permalink()); ?>";
 
+							if(voto == "no"){
+								jQuery.post("<?php echo admin_url('admin-ajax.php'); ?>",{ action : 'add_votacion','votacion_ip' : votacion_ip, 'votacion_fecha' : votacion_fecha, 'votacion_tipo_votacion' : votacion_tipo_votacion, 'votacion_url_post' : votacion_url_post  }, function( response ){
+									var data = JSON.parse(response);
+									jQuery("#v_positivas").html(data.positivos);
+									jQuery("#v_negativas").html(data.negativos);
+								});
+
+								jQuery(this).css("background","<?php echo $vsettings['votacion_color_despues_votar']; ?>");
+								jQuery("a.votacion_positiva, a.votacion_negativa").attr("data-voto","yes");
+							}
+							
+						});
 			<?php } ?>				
 		});
 	</script>
