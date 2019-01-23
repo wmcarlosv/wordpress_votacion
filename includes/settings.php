@@ -8,7 +8,7 @@
 	  		'manage_options', 
 	  		'votacion_settings', 
 	  		'est_callback', 
-	  		'dashicons-welcome-widgets-menus', 
+	  		'dashicons-admin-generic', 
 	  		90);
 
 	}
