@@ -62,7 +62,6 @@ function votacion_datos() {
 	$data = get_post_meta( $post->ID, 'pm_votacion_estadistic', true );
 
 	if(count($data) > 0){
-		$votacion_usuario = (isset($data['votacion_usuario']) and !empty($data['votacion_usuario'])) ? $data['votacion_usuario'] : "";
 		$votacion_ip = (isset($data['votacion_ip']) and !empty($data['votacion_ip'])) ? $data['votacion_ip'] : "";
 		$votacion_fecha = (isset($data['votacion_fecha']) and !empty($data['votacion_fecha'])) ? $data['votacion_fecha'] : "";
 
@@ -72,10 +71,6 @@ function votacion_datos() {
 	}
 	?>
 	<table>
-		<tr>
-			<td>Usuario: </td>
-			<td><input type="text" value="<?php echo $votacion_usuario; ?>" name="votacion_usuario"></td>
-		</tr>
 		<tr>
 			<td>Ip:</td>
 			<td><input type="text" value="<?php echo $votacion_ip; ?>" name="votacion_ip"></td>
