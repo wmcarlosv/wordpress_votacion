@@ -31,19 +31,19 @@
 		'has_archive'          => true,
 		'menu_position'        => 30,
 		'menu_icon'            => 'dashicons-star-filled',
-		'register_meta_box_cb' => 'wpt_add_event_metaboxes',
+		'register_meta_box_cb' => 'wpt_add_votacion_metaboxes',
 	);
 	register_post_type( 'votaciones', $args );
 }
 
 add_action( 'init', 'votacion_post_type' );
 
-function wpt_add_event_metaboxes() {
+function wpt_add_votacion_metaboxes() {
 
 	add_meta_box(
-		'wpt_votacion_estadisticas',
+		'votacion_datos',
 		'Datos de la Votacion',
-		'wpt_votacion_estadisticas',
+		'votacion_datos',
 		'votaciones'
 		//'side',
 		//'default'
@@ -51,7 +51,7 @@ function wpt_add_event_metaboxes() {
 
 }
 
-function wpt_votacion_estadisticas() {
+function votacion_datos() {
 
 	global $post;
 	// Nonce field to validate form request came from current site
@@ -59,27 +59,38 @@ function wpt_votacion_estadisticas() {
 	// Get the location data if it's already been entered
 	//$location = get_post_meta( $post->ID, 'location', true );
 	// Output the field
+	$data = get_post_meta( $post->ID, 'pm_votacion_estadistic', true );
+
+	if(count($data) > 0){
+		$votacion_usuario = (isset($data['votacion_usuario']) and !empty($data['votacion_usuario'])) ? $data['votacion_usuario'] : "";
+		$votacion_ip = (isset($data['votacion_ip']) and !empty($data['votacion_ip'])) ? $data['votacion_ip'] : "";
+		$votacion_fecha = (isset($data['votacion_fecha']) and !empty($data['votacion_fecha'])) ? $data['votacion_fecha'] : "";
+
+		$votacion_tipo_votacion = (isset($data['votacion_tipo_votacion']) and !empty($data['votacion_tipo_votacion'])) ? $data['votacion_tipo_votacion'] : "";
+
+		$votacion_url_post = (isset($data['votacion_url_post']) and !empty($data['votacion_url_post'])) ? $data['votacion_url_post'] : "";
+	}
 	?>
 	<table>
 		<tr>
 			<td>Usuario: </td>
-			<td><input type="text" name="votacion_usuario"></td>
+			<td><input type="text" value="<?php echo $votacion_usuario; ?>" name="votacion_usuario"></td>
 		</tr>
 		<tr>
 			<td>Ip:</td>
-			<td><input type="text" name="votacion_ip"></td>
+			<td><input type="text" value="<?php echo $votacion_ip; ?>" name="votacion_ip"></td>
 		</tr>
 		<tr>
 			<td>Fecha Votacion: </td>
-			<td><input type="date" name="votacion_fecha"></td>
+			<td><input type="text" value="<?php echo $votacion_fecha; ?>" name="votacion_fecha"></td>
 		</tr>
 		<tr>
 			<td>Tipo Votacion: </td>
-			<td><input type="text" name="votacion_tipo_votacion"></td>
+			<td><input type="text" value="<?php echo $votacion_tipo_votacion ?>" name="votacion_tipo_votacion"></td>
 		</tr>
 		<tr>
 			<td>Url post Votacion: </td>
-			<td><textarea name="votacion_url_post"></textarea></td>
+			<td><textarea name="votacion_url_post"><?php echo $votacion_url_post; ?></textarea></td>
 		</tr>
 	</table>
 	<?php

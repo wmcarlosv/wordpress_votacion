@@ -41,6 +41,8 @@ define('EST_DIR_URL', plugin_dir_url(__FILE__));
 			require_once EST_DIR_PATH.'includes/functions.php';
 			//postypes
 			require_once EST_DIR_PATH.'includes/postype/postype.php';
+			//shortcodes 
+			require_once EST_DIR_PATH.'includes/shortcode/shortcode.php';
 			//settings
 			require_once EST_DIR_PATH.'includes/settings.php';
 		
