@@ -66,7 +66,7 @@
 			overflow: hidden;
 			height: auto;
 		}
-		a.btn-base{
+		a.votacion_positiva, a.votacion_negativa{
 			text-decoration: none;
 			border:<?php echo $vsettings['votacion_grosor_borde_boton']."px solid ".$vsettings['votacion_color_borde_boton']; ?>!important;
 			padding:<?php echo $vsettings['votacion_tamano_boton'] ?>px !important;
