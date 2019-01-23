@@ -66,7 +66,7 @@
 			overflow: hidden;
 			height: auto;
 		}
-		a.votacion_positiva, a.votacion_negativa{
+		a.btn-base{
 			text-decoration: none;
 			border:<?php echo $vsettings['votacion_grosor_borde_boton']."px solid ".$vsettings['votacion_color_borde_boton']; ?>!important;
 			padding:<?php echo $vsettings['votacion_tamano_boton'] ?>px !important;
@@ -80,9 +80,9 @@
 		}
 	</style>
 	<div class="contenedor-botones">
-		<a href="#" data-type="positiva" class="btn-base votacion_positiva"><i class="fa <?php echo $vsettings['votacion_icono_voto_positivo'] ?>"></i> <b id="v_positivas"><?php echo $positivas; ?></b></a>
+		<a href="#" data-type="positiva" data-voto="no" class="btn-base votacion_positiva"><i class="fa <?php echo $vsettings['votacion_icono_voto_positivo'] ?>"></i> <b id="v_positivas"><?php echo $positivas; ?></b></a>
 
-		<a href="#" data-type="negativa" class="btn-base votacion_negativa"><i class="fa <?php echo $vsettings['votacion_icono_voto_negativo'] ?>"></i> <b id="v_negativas"><?php echo $negativas; ?></b></a>
+		<a href="#" data-type="negativa" data-voto="no" class="btn-base votacion_negativa"><i class="fa <?php echo $vsettings['votacion_icono_voto_negativo'] ?>"></i> <b id="v_negativas"><?php echo $negativas; ?></b></a>
 	</div>
 	<script type="text/javascript">
 		jQuery(document).ready(function(){
@@ -96,21 +96,23 @@
 			<?php }else{ ?>
 
 				jQuery("a.btn-base").click(function(){
+					var voto = jQuery(this).attr("data-voto");
 					var votacion_tipo_votacion = jQuery(this).attr("data-type");
 					var votacion_ip = "<?php echo getRealIpAddr(); ?>";
 					var votacion_fecha = "<?php echo date('Y-m-d H:m:s'); ?>";
 					var votacion_url_post = "<?php echo esc_url(get_permalink()); ?>";
+					
+					if(voto == "no"){
+						jQuery.post("<?php echo admin_url('admin-ajax.php'); ?>",{ action : 'add_votacion','votacion_ip' : votacion_ip, 'votacion_fecha' : votacion_fecha, 'votacion_tipo_votacion' : votacion_tipo_votacion, 'votacion_url_post' : votacion_url_post  }, function( response ){
+							var data = JSON.parse(response);
+							jQuery("#v_positivas").html(data.positivos);
+							jQuery("#v_negativas").html(data.negativos);
+						});
 
-					jQuery.post("<?php echo admin_url('admin-ajax.php'); ?>",{ action : 'add_votacion','votacion_ip' : votacion_ip, 'votacion_fecha' : votacion_fecha, 'votacion_tipo_votacion' : votacion_tipo_votacion, 'votacion_url_post' : votacion_url_post  }, function( response ){
-						var data = JSON.parse(response);
-						jQuery("#v_positivas").html(data.positivos);
-						jQuery("#v_negativas").html(data.negativos);
-					});
-
-					jQuery(this).css("background","<?php echo $vsettings['votacion_color_despues_votar']; ?>");
-
-					jQuery("a.votacion_positiva").removeClass("btn-base");
-					jQuery("a.votacion_negativa").removeClass("btn-base");
+						jQuery(this).css("background","<?php echo $vsettings['votacion_color_despues_votar']; ?>");
+						jQuery("a.votacion_positiva, a.votacion_negativa").attr("data-voto","yes");
+					}
+					
 				});
 
 			<?php } ?>				
