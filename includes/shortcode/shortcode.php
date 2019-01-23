@@ -108,8 +108,12 @@
 					});
 
 					jQuery(this).css("background","<?php echo $vsettings['votacion_color_despues_votar']; ?>");
+
+					jQuery("a.votacion_positiva").removeClass("votacion_positiva");
+
+					jQuery("a.votacion_negativa").removeClass("votacion_negativa");
 				});
-				
+
 			<?php } ?>				
 		});
 	</script>
