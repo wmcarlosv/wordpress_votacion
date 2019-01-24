@@ -43,10 +43,13 @@
 		foreach($votaciones as $key => $value)
 		{
 			$data = get_post_meta($votaciones[$key]->ID,'pm_votacion_estadistic', true);
-			if($data['votacion_tipo_votacion'] == "positiva"){
-				$positivas+=1;
-			}else{
-				$negativas+=1;
+			if($data['id_post']==$_POST['id_post']){
+			
+				if($data['votacion_tipo_votacion'] == "positiva"){
+					$positivas+=1;
+				}else{
+					$negativas+=1;
+				}
 			}
 		}
 

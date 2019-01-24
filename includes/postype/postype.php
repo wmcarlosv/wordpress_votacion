@@ -1,5 +1,5 @@
 <?php
-
+	add_action( 'init', 'votacion_post_type' );
 	function votacion_post_type() {
 	$labels = array(
 		'name'               => __( 'Votaciones' ),
@@ -36,7 +36,6 @@
 	register_post_type( 'votaciones', $args );
 }
 
-add_action( 'init', 'votacion_post_type' );
 
 function wpt_add_votacion_metaboxes() {
 
@@ -89,4 +88,50 @@ function votacion_datos() {
 		</tr>
 	</table>
 	<?php
+}
+
+
+add_filter('manage_edit-votaciones_columns' , 'votaciones_columns_callback');
+//PRIMERAMENTE REGISTRAMOS LAS COLUMNAS
+function votaciones_columns_callback()
+{
+
+	$new_columns = array(
+        'cb' => '<input type="checkbox" />',
+		'user' => __('Usuario'),
+		'ip' => __('Ip'),
+		'date_voto' => __('Fecha'),
+		'like' => __('Tipo de Voto'),
+		'post' => __('Entrada'),
+    );
+     return $new_columns;
+}
+
+add_action('manage_votaciones_posts_custom_column','votaciones_custom_columns_fn',10,2);
+function votaciones_custom_columns_fn($column, $post_id)
+{
+	wp_enqueue_style('fontawasome');
+	$data = get_post_meta( $post_id, 'pm_votacion_estadistic', true );
+	switch ($column) {
+				case 'user':
+					echo $data['votacion_ip'];
+				break;
+				case 'ip':
+					echo $data['votacion_ip'];
+				break;
+				case 'date_voto':
+					echo $data['votacion_fecha'];
+				break;
+				case 'like':
+					if($data['votacion_tipo_votacion']=='positiva'){
+						echo '<h3 style="font-size:25px !important; padding:0px !important; margin: 0px !important; color:#009329;" class="fa fa-thumbs-up"></h3>';
+					}else{
+						echo '<h3 style="font-size:25px !important;padding:0px !important; margin: 0px !important; color:#C00000;" class="fa fa-thumbs-down"></h3>';
+					}
+
+				break;
+				case 'post':
+					echo '<a href="'.$data['votacion_url_post'].'">'.get_the_title($data['id_post']).'</a><br><b>ENTRADA('.$data["id_post"].')</b>';
+				break;
+	}
 }

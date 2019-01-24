@@ -8,6 +8,9 @@
 		$votacion_color_fondo = (isset($est['votacion_color_fondo']) and !empty($est['votacion_color_fondo']) ) ? $est['votacion_color_fondo'] : "";
 
 		$votacion_color_despues_votar = (isset($est['votacion_color_despues_votar']) and !empty($est['votacion_color_despues_votar']) ) ? $est['votacion_color_despues_votar'] : "";
+		$votacion_color_fuente = (isset($est['votacion_color_fuente']) and !empty($est['votacion_color_fuente']) ) ? $est['votacion_color_fuente'] : "";
+
+		$votacion_color_fuente_despues_votar = (isset($est['votacion_color_fuente_despues_votar']) and !empty($est['votacion_color_fuente_despues_votar']) ) ? $est['votacion_color_fuente_despues_votar'] : "";
 
 		$votacion_color_borde_boton = (isset($est['votacion_color_borde_boton']) and !empty($est['votacion_color_borde_boton']) ) ? $est['votacion_color_borde_boton'] : "";
 
@@ -45,6 +48,9 @@
 </style>
 <form action="<?php echo admin_url('admin-post.php'); ?>" method="POST">
 <table>
+	<caption>
+	<p><b style="color:red">Nota:</b> <span> Es necesario pegar el siguiente shortcode [votacion_botones] en cualquier parte de la pagina  para visualizar los botones de votacion</span></p>
+	</caption>
 	<input type="hidden" name="action" value="votacion_settings_action">
 	<tr>
 		<td colspan="2">
@@ -66,6 +72,14 @@
 	<tr>
 		<td>Color despues de Votar:</td>
 		<td><input type="color" value="<?php echo $votacion_color_despues_votar; ?>" name="votacion_color_despues_votar"></td>
+	</tr>
+	<tr>
+		<td>Color Fuente:</td>
+		<td><input type="color" value="<?php echo $votacion_color_fuente; ?>" name="votacion_color_fuente"></td>
+	</tr>
+	<tr>
+		<td>Color Fuente despues de Votar:</td>
+		<td><input type="color" value="<?php echo $votacion_color_fuente_despues_votar; ?>" name="votacion_color_fuente_despues_votar"></td>
 	</tr>
 	<tr>
 		<td>Color Borde del Boton</td>
@@ -94,14 +108,28 @@
 		</td>
 	</tr>
 	<tr>
-		<td>Recurrencia de Voto:</td>
-		<td><input type="number" value="<?php echo $votacion_recurrencia_votos; ?>" name="votacion_recurrencia_votos"></td>
+		<td>
+			Recurrencia de Voto:
+			<p>Cantidad de horas en las cuales se activara los botones para votar en el mismo post</p>
+		</td>
+		<td><input type="number" value="<?php echo $votacion_recurrencia_votos; ?>" name="votacion_recurrencia_votos"><b>Horas</b></td>
 	</tr>
 	<tr>
 		<td colspan="2"><button type="submit">Guardar</button></td>
 	</tr>
 </table>
 </form>
+
+<hr>
+<div>
+	<h3>Vista previa</h3>
+	<p>Previsualizamos los botones de votaciones segun el diseño propuesto</p>
+	<br>
+	<?php echo do_shortcode('[votacion_botones]'); ?>
+
+</div>
+
+
 <script type="text/javascript">
 	jQuery(document).ready(function(){
 

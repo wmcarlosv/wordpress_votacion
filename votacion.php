@@ -16,7 +16,7 @@
 
 define('EST_DIR_PATH', plugin_dir_path(__FILE__));
 define('EST_DIR_URL', plugin_dir_url(__FILE__));
-	class CDS_SC{
+	class woo_votaciones{
 		public function __construct()
 		{
 			add_action('admin_enqueue_scripts',array($this,'est_register_scripts'));
@@ -48,4 +48,4 @@ define('EST_DIR_URL', plugin_dir_url(__FILE__));
 		
 		}	
 	}
-new CDS_SC();
+new woo_votaciones();

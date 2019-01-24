@@ -1,7 +1,7 @@
 <?php
 	
-	add_action( 'admin_menu', 'register_menu_security_sns' );
-	function register_menu_security_sns() {
+	add_action( 'admin_menu', 'register_menu_votaciones' );
+	function register_menu_votaciones() {
 	  	add_menu_page(
 	  		'Votacion Settings', 
 	  		'Votacion Settings', 
@@ -15,6 +15,7 @@
 	//--Dashboard
 	function est_callback()
 	{
+		wp_enqueue_style('fontawasome');
 		$url = EST_DIR_PATH.'includes/admin/views/view_settings.php';
 		require_once $url;
 	}
